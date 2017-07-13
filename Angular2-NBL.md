@@ -1,5 +1,15 @@
 # Anuglar2 Syntax N.B. List:
 
+## Advance Features
+
+    Renderer + ElementRef
+        * This combination allows cross-platform compatibility (mobile, desktop, and web-worker)
+        * [Link](https://netbasal.com/angular-2-explore-the-renderer-service-e43ef673b26c)
+    
+    Best Practices
+        * [Link](https://github.com/escardin/angular2-community-faq/blob/master/best-practices.md#proper-use-of-eventemitters)
+
+
 ## General Architecture
 
     Modules: largest unit of modularity 
@@ -35,8 +45,9 @@
 ## Component Interactions
   1. @Input decorators (parent -> children)
   2. @Output + EventEmitter (children -> parent)
-  3. @ViewChild (children -> parent: allowing parent TO ACCESS and call child methods)
-  4. Local Variable 
+  3. ngOnChanges(children -> parent)    
+  4. @ViewChild (children -> parent: allowing parent TO ACCESS and call child methods)
+  5. Local Variable 
         - Local Variable allows a parent component to use data binding to read child properties or invoke child methods (limited and NO ACCESS to child component)
 
                 @Component({
@@ -228,16 +239,23 @@ NgIf
     
 
 
-## ngOnInit Lifecycle Hook
+## Angular Lifecycle Hook
+  * ngOnInit()
 
-    Angular offers interfaces for tapping into critical moments in the component lifecycle: at creation, after each change, and at its eventual destruction.
+        Angular offers interfaces for tapping into critical moments in the component lifecycle: at creation, after each change, and at its eventual destruction.
 
-    To Use:
-        import { OnInit } from '@angular/core';
-        export class AppComponent implements OnInit {
-            ngOnInit(): void {
-            }
-        }
+            To Use:
+                import { OnInit } from '@angular/core';
+                export class AppComponent implements OnInit {
+                    ngOnInit(): void {
+                    }
+                }
+  * ngOnChanges() 
+
+     - Respond when Angular (re)sets data-bound input properties. The method receives a SimpleChanges object of current and previous property values.
+        
+     - Called before ngOnInit() and whenever one or more data-bound input properties change.
+
 
 
 ## Data Binding:
@@ -309,7 +327,7 @@ NgIf
                     providers: [HeroService]
                 3. Add setter for the private var 
                     getHeroes(): void {
-                        this.heroes = this.heroService.getHeroes();
+                        this.heroes = this.heroService.getHeroes()
                     }
                 4. Call this setter function to initialize 
 
